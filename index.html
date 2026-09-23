@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <!-- Configurações básicas da página e compatibilidade com dispositivos móveis. -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <!-- Informações usadas pelo navegador e por mecanismos de busca. -->
+    <title>Balões</title>
+    <meta
+      name="description"
+      content="Balões personalizados com entrega em São Paulo. Arranjos para aniversário, chá revelação, maternidade e eventos corporativos."
+    />
+
+    <!-- Fontes usadas no projeto: Fraunces para títulos e Poppins para textos. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ================================================================
+         1. VARIÁVEIS E RESET
+         Centralizamos as cores e medidas para facilitar a personalização
+         do template. Para trocar a identidade visual, altere apenas estas
+         variáveis.
+         ================================================================ */
+      :root {
+        --color-background: #fbf6ef;
+        --color-primary: #e8623f;
+        --color-secondary: #7a3b5e;
+        --color-text: #2b2620;
+        --color-text-muted: #7a7266;
+        --color-border: #eae1d2;
+        --color-white: #ffffff;
+        --color-yellow: #e9b94a;
+        --color-green: #8fb8a8;
+
+        --container-width: 1100px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-pill: 999px;
+        --shadow-card: 0 8px 20px rgba(43, 38, 32, 0.06);
+      }
+
+      /* O box-sizing previsível evita problemas de largura e espaçamento. */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 88px;
+      }
+
+      body {
+        min-width: 320px;
+        background: var(--color-background);
+        color: var(--color-text);
+        font-family: "Poppins", sans-serif;
+        line-height: 1.6;
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--color-text);
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      /* Container padrão que mantém o conteúdo centralizado. */
+      .container {
+        width: min(100% - 48px, var(--container-width));
+        margin-inline: auto;
+      }
+
+      /* ================================================================
+         2. COMPONENTES REUTILIZÁVEIS
+         ================================================================ */
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 26px;
+        border: 1.5px solid transparent;
+        border-radius: var(--radius-pill);
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 160ms ease, background-color 160ms ease,
+          color 160ms ease, border-color 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .button:focus-visible,
+      .menu-toggle:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid rgba(232, 98, 63, 0.4);
+        outline-offset: 3px;
+      }
+
+      .button--primary {
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+
+      .button--primary:hover {
+        background: #ce4e2e;
+      }
+
+      .button--outline {
+        border-color: var(--color-text);
+        color: var(--color-text);
+      }
+
+      .button--outline:hover {
+        background: var(--color-text);
+        color: var(--color-white);
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .section-heading {
+        max-width: 56ch;
+        margin-bottom: 34px;
+      }
+
+      .section-heading h2 {
+        font-size: clamp(24px, 3.2vw, 30px);
+      }
+
+      .section-heading p {
+        margin-top: 10px;
+        color: var(--color-text-muted);
+      }
+
+      /* ================================================================
+         3. CABEÇALHO E NAVEGAÇÃO
+         No celular o menu fica escondido e é aberto pelo botão.
+         A partir de 820px, os links aparecem na horizontal.
+         ================================================================ */
+      .site-header {
+        position: sticky;
+        z-index: 10;
+        top: 0;
+        background: var(--color-background);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 72px;
+        gap: 20px;
+      }
+
+      .logo {
+        font-family: "Fraunces", serif;
+        font-size: 21px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .logo span {
+        color: var(--color-primary);
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        color: var(--color-text);
+        cursor: pointer;
+        font-size: 24px;
+      }
+
+      .menu-toggle:hover {
+        background: rgba(43, 38, 32, 0.06);
+      }
+
+      .navigation-links {
+        position: absolute;
+        top: 72px;
+        right: 24px;
+        left: 24px;
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        padding: 12px;
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-card);
+        list-style: none;
+      }
+
+      .navigation-links.is-open {
+        display: flex;
+      }
+
+      .navigation-links a {
+        display: block;
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+        font-size: 15px;
+        text-decoration: none;
+      }
+
+      .navigation-links a:hover {
+        background: var(--color-background);
+      }
+
+      .header-cta {
+        display: none;
+      }
+
+      /* ================================================================
+         4. SEÇÃO PRINCIPAL (HERO)
+         O grid vira uma coluna no celular e duas colunas em telas maiores.
+         ================================================================ */
+      .hero {
+        padding: 64px 0 56px;
+      }
+
+      .hero-layout {
+        display: grid;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .hero h1 {
+        max-width: 12ch;
+        font-size: clamp(30px, 4.5vw, 44px);
+      }
+
+      .hero-description {
+        max-width: 42ch;
+        margin-top: 16px;
+        color: var(--color-text-muted);
+        font-size: 16.5px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      /* Ilustração decorativa feita somente com CSS, sem imagens externas. */
+      .balloon-art {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 14px;
+        min-height: 190px;
+        padding-top: 20px;
+      }
+
+      .balloon {
+        border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+        box-shadow: inset -10px -10px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .balloon--coral {
+        width: 90px;
+        height: 110px;
+        margin-top: 20px;
+        background: var(--color-primary);
+      }
+
+      .balloon--plum {
+        width: 120px;
+        height: 145px;
+        background: var(--color-secondary);
+      }
+
+      .balloon--yellow {
+        width: 80px;
+        height: 98px;
+        margin-top: 40px;
+        background: var(--color-yellow);
+      }
+
+      /* ================================================================
+         5. CATEGORIAS
+         A grade começa com duas colunas e chega a quatro no desktop.
+         ================================================================ */
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .category-card {
+        display: block;
+        padding: 22px 18px;
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        color: var(--color-text);
+        text-decoration: none;
+        transition: transform 160ms ease, box-shadow 160ms ease;
+      }
+
+      .category-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-card);
+      }
+
+      .category-dot {
+        width: 34px;
+        height: 34px;
+        margin-bottom: 14px;
+        border-radius: 50%;
+      }
+
+      .category-dot--coral {
+        background: var(--color-primary);
+      }
+
+      .category-dot--plum {
+        background: var(--color-secondary);
+      }
+
+      .category-dot--yellow {
+        background: var(--color-yellow);
+      }
+
+      .category-dot--green {
+        background: var(--color-green);
+      }
+
+      .category-card h3,
+      .today-card h3 {
+        font-family: "Poppins", sans-serif;
+        font-size: 15.5px;
+        font-weight: 600;
+      }
+
+      .category-card p {
+        margin-top: 6px;
+        color: var(--color-text-muted);
+        font-size: 13px;
+      }
+
+      /* ================================================================
+         6. SEÇÕES DE DESTAQUE, ENTREGA E CTA
+         ================================================================ */
+      .today {
+        background: var(--color-secondary);
+        color: var(--color-white);
+      }
+
+      .today h2 {
+        color: var(--color-white);
+      }
+
+      .today .section-heading p,
+      .today-card p {
+        color: #e7d2de;
+      }
+
+      .today-grid {
+        display: grid;
+        gap: 24px;
+        margin-top: 8px;
+      }
+
+      .today-card h3 {
+        margin-bottom: 8px;
+        color: #f3d9e4;
+        font-size: 17px;
+      }
+
+      .today-card p {
+        font-size: 14.5px;
+      }
+
+      .today .button {
+        margin-top: 30px;
+      }
+
+      .delivery {
+        background: var(--color-white);
+        border-top: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .delivery-layout {
+        display: grid;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .delivery-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+        color: var(--color-text-muted);
+        font-size: 15px;
+        list-style: none;
+      }
+
+      .delivery-list li::before {
+        content: "✓";
+        margin-right: 10px;
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+
+      .delivery-description {
+        color: var(--color-text-muted);
+      }
+
+      .delivery .button {
+        margin-top: 18px;
+      }
+
+      .final-cta {
+        background: var(--color-primary);
+        color: var(--color-white);
+        text-align: center;
+      }
+
+      .final-cta h2 {
+        max-width: 20ch;
+        margin-inline: auto;
+        color: var(--color-white);
+      }
+
+      .final-cta p {
+        margin-top: 10px;
+      }
+
+      .final-cta .button {
+        margin-top: 22px;
+        border-color: var(--color-white);
+        color: var(--color-white);
+      }
+
+      .final-cta .button:hover {
+        background: var(--color-white);
+        color: var(--color-primary);
+      }
+
+      /* ================================================================
+         7. FORMULÁRIO DE CONTATO
+         Os campos recebem classes próprias para evitar estilos inline.
+         ================================================================ */
+      .contact-container {
+        max-width: 600px;
+      }
+
+      .contact-form {
+        display: grid;
+        gap: 14px;
+      }
+
+      .form-field {
+        width: 100%;
+        padding: 13px 16px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-white);
+        color: var(--color-text);
+      }
+
+      .form-field::placeholder {
+        color: #9a9185;
+      }
+
+      .form-status {
+        min-height: 24px;
+        color: var(--color-secondary);
+        font-size: 14px;
+      }
+
+      /* Mantém os rótulos disponíveis para leitores de tela sem ocupar espaço visual. */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* ================================================================
+         8. RODAPÉ
+         ================================================================ */
+      .site-footer {
+        padding: 36px 0;
+        background: var(--color-text);
+        color: #c9c2b4;
+        font-size: 14px;
+      }
+
+      .footer-layout {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px 24px;
+      }
+
+      /* ================================================================
+         9. BREAKPOINTS RESPONSIVOS
+         Os ajustes acontecem somente quando há espaço suficiente, evitando
+         que o conteúdo fique apertado em celulares e tablets menores.
+         ================================================================ */
+      @media (min-width: 700px) {
+        .category-grid,
+        .today-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .today-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 820px) {
+        .menu-toggle {
+          display: none;
+        }
+
+        .navigation-links {
+          position: static;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 30px;
+          padding: 0;
+          background: transparent;
+          border: 0;
+          box-shadow: none;
+        }
+
+        .navigation-links a {
+          padding: 6px 0;
+        }
+
+        .header-cta.is-visible {
+          display: inline-flex;
+        }
+      }
+
+      @media (min-width: 860px) {
+        .hero-layout,
+        .delivery-layout {
+          grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        .delivery-layout {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* Em telas muito estreitas, os botões ocupam toda a largura disponível. */
+      @media (max-width: 420px) {
+        .container {
+          width: min(100% - 32px, var(--container-width));
+        }
+
+        .hero-actions,
+        .hero-actions .button {
+          width: 100%;
+        }
+
+        .balloon--coral {
+          width: 70px;
+          height: 88px;
+        }
+
+        .balloon--plum {
+          width: 94px;
+          height: 116px;
+        }
+
+        .balloon--yellow {
+          width: 62px;
+          height: 78px;
+        }
+      }
+
+      /* Usuários que preferem menos movimento não recebem animações de hover. */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Cabeçalho fixo com navegação principal e botão de ação. -->
+    <header class="site-header">
+      <div class="navigation container">
+        <a class="logo" href="#inicio" aria-label="Balões - início">
+          <span>Balões</span>
+        </a>
+
+        <!-- Botão visível no celular para abrir e fechar o menu. -->
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-controls="navigation-links"
+          aria-expanded="false"
+          aria-label="Abrir menu"
+        >
+          <span aria-hidden="true">☰</span>
+        </button>
+
+        <nav aria-label="Navegação principal">
+          <ul class="navigation-links" id="navigation-links">
+            <li><a href="#categorias">Categorias</a></li>
+            <li><a href="#hoje">Entrega hoje</a></li>
+            <li><a href="#entrega">Entrega</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </nav>
+
+        <!-- Este CTA aparece no desktop depois que o usuário rola a página. -->
+        <a class="button button--primary header-cta" href="#contato">
+          Pedir agora
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero: apresenta a proposta principal do negócio. -->
+      <section class="hero" id="inicio">
+        <div class="hero-layout container">
+          <div>
+            <h1>Balões personalizados</h1>
+            <p class="hero-description">
+              Arranjos prontos para presentear em aniversários, chá revelação,
+              maternidade e eventos corporativos. 
+            </p>
+
+            <div class="hero-actions">
+              <a class="button button--primary" href="#categorias">
+                Ver catálogo
+              </a>
+              <a class="button button--outline" href="#contato">
+                Falar no WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Ilustração decorativa; pode ser substituída por uma imagem real depois. -->
+          <div class="balloon-art" aria-label="Ilustração de três balões coloridos" role="img">
+            <div class="balloon balloon--coral"></div>
+            <div class="balloon balloon--plum"></div>
+            <div class="balloon balloon--yellow"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grade de categorias oferecidas pelo ateliê. -->
+      <section class="section" id="categorias">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Encontre o balão perfeito para cada ocasião</h2>
+            <p>Selecione a categoria e veja as opções disponíveis.</p>
+          </div>
+
+          <div class="category-grid">
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--coral" aria-hidden="true"></div>
+              <h3>Mesversário</h3>
+              <p>Gás hélio ou mesa</p>
+            </a>
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--plum" aria-hidden="true"></div>
+              <h3>Aniversário</h3>
+              <p>Mesa e buquês</p>
+            </a>
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--yellow" aria-hidden="true"></div>
+              <h3>Chá Revelação</h3>
+              <p>Momento inesquecível</p>
+            </a>
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--green" aria-hidden="true"></div>
+              <h3>Maternidade</h3>
+              <p>Boas-vindas ao bebê</p>
+            </a>
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--coral" aria-hidden="true"></div>
+              <h3>Eventos Corporativos</h3>
+              <p>Com sua marca</p>
+            </a>
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--plum" aria-hidden="true"></div>
+              <h3>Conquistas</h3>
+              <p>Formaturas e promoções</p>
+            </a>
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--yellow" aria-hidden="true"></div>
+              <h3>Aniversário Pet</h3>
+              <p>Para o seu bichinho</p>
+            </a>
+            <a class="category-card" href="aniversario.html">
+              <div class="category-dot category-dot--green" aria-hidden="true"></div>
+              <h3>Cestas com Balões</h3>
+              <p>Flores e balões juntos</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bloco para pedidos urgentes ou entregas no mesmo dia. -->
+      <section class="section today" id="hoje">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Precisa de balões para hoje?</h2>
+            <p>
+              Consulte a equipe para verificar disponibilidade e prazo para o seu CEP.
+            </p>
+          </div>
+
+          <div class="today-grid">
+            <div class="today-card">
+              <h3>Produtos disponíveis</h3>
+              <p>Modelos selecionados com produção mais rápida, conforme cor e quantidade.</p>
+            </div>
+            <div class="today-card">
+              <h3>Personalização</h3>
+              <p>Alguns balões podem levar nome, idade ou frase curta ainda hoje.</p>
+            </div>
+            <div class="today-card">
+              <h3>Prazo real de entrega</h3>
+              <p>Confirmado após recebermos modelo, personalização, CEP e horário.</p>
+            </div>
+          </div>
+
+          <a class="button button--primary" href="#contato">Consultar entrega hoje</a>
+        </div>
+      </section>
+
+      <!-- Informações sobre áreas e horários de entrega. -->
+      <section class="section delivery" id="entrega">
+        <div class="delivery-layout container">
+          <div>
+            <h2>Entrega e frete</h2>
+            <ul class="delivery-list">
+              <li>Piracicaba </li>
+              <li>Segunda a sexta: xxxx</li>
+              <li>Sábado: xxxx</li>
+              <li>Domingo: xxxxx</li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="delivery-description">
+              Informe seu CEP e receba o prazo e o valor do frete antes de confirmar
+              o pedido — sem compromisso.
+            </p>
+            <!-- <a class="button button--outline" href="#contato">Informar meu CEP</a> -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Chamada final para incentivar o contato. -->
+      <section class="section final-cta">
+        <div class="container">
+          <h2>Torne sua ocasião mais colorida</h2>
+          <p>Orçamento em minutos, direto pelo WhatsApp.</p>
+          <a class="button button--outline" href="#contato">Pedir pelo WhatsApp</a>
+        </div>
+      </section>
+
+      <!-- Formulário demonstrativo de orçamento. Para funcionar de verdade,
+           conecte-o a um backend, serviço de formulários ou WhatsApp. -->
+
+
+      <section class="section" id="contato">
+        <div class="contact-container container">
+          <div class="section-heading">
+            <h2>Fale com a gente</h2>
+            <p>Responda em poucos minutos e receba seu orçamento.</p>
+          </div>
+
+          <form class="contact-form" id="contact-form">
+            <label class="sr-only" for="name">Seu nome</label>
+            <input class="form-field" id="name" name="name" type="text" placeholder="Seu nome" required />
+
+            <label class="sr-only" for="phone">WhatsApp</label>
+            <input class="form-field" id="phone" name="phone" type="tel" placeholder="WhatsApp" required />
+
+            <label class="sr-only" for="zip-code">CEP para entrega</label>
+            <input class="form-field" id="zip-code" name="zip-code" type="text" inputmode="numeric" placeholder="CEP para entrega" />
+
+            <label class="sr-only" for="message">O que você precisa?</label>
+            <textarea class="form-field" id="message" name="message" rows="3" placeholder="O que você precisa?"></textarea>
+
+            <button class="button button--primary" type="submit">Solicitar orçamento</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé com dados básicos do negócio. Substitua pelos seus dados reais. -->
+    <footer class="site-footer">
+      <div class="footer-layout container">
+        <div>© 2026 Balões — CNPJ 00.000.000/0000-00</div>
+        <a href="##">(xx) xxxxx-xxxx</a>
+      </div>
+    </footer>
+
+    <script>
+      /* ================================================================
+         JAVASCRIPT
+         O script controla somente comportamentos da interface:
+         1. abrir e fechar o menu no celular;
+         2. mostrar o CTA do cabeçalho após a rolagem;
+         3. exibir uma mensagem demonstrativa no envio do formulário.
+         ================================================================ */
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navigationLinks = document.querySelector(".navigation-links");
+      const headerCta = document.querySelector(".header-cta");
+      const contactForm = document.querySelector("#contact-form");
+      const formStatus = document.querySelector("#form-status");
+
+      // Abre ou fecha a navegação mobile e atualiza os atributos de acessibilidade.
+      menuToggle.addEventListener("click", () => {
+        const isOpen = navigationLinks.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+      });
+
+      // Fecha o menu depois que o usuário escolhe uma seção da página.
+      navigationLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navigationLinks.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Abrir menu");
+        });
+      });
+
+      // Permite fechar o menu usando a tecla Escape.
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          navigationLinks.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Abrir menu");
+        }
+      });
+
+      // Exibe o botão "Pedir agora" no cabeçalho após 200px de rolagem.
+      window.addEventListener(
+        "scroll",
+        () => {
+          headerCta.classList.toggle("is-visible", window.scrollY > 200);
+        },
+        { passive: true }
+      );
+
+      // Simulação de envio. Substitua este bloco por uma integração real.
+      contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        formStatus.textContent = "Recebemos seu pedido! Em breve entraremos em contato.";
+        contactForm.reset();
+      });
+    </script>
+  </body>
+</html>

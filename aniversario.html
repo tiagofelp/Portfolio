@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <!-- Configurações básicas para SEO e visualização em dispositivos móveis. -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Balões de Aniversário — Balões</title>
+    <meta
+      name="description"
+      content="Conheça nossas opções de balões personalizados para aniversários, com buquês, mesas e arranjos para presentear."
+    />
+
+    <!-- Fontes utilizadas no layout. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ================================================================
+         VARIÁVEIS E RESET
+         ================================================================ */
+      :root {
+        --cream: #fbf6ef;
+        --coral: #e8623f;
+        --plum: #7a3b5e;
+        --yellow: #e9b94a;
+        --green: #8fb8a8;
+        --ink: #2b2620;
+        --muted: #7a7266;
+        --line: #eae1d2;
+        --white: #ffffff;
+        --container: 1120px;
+        --radius: 14px;
+        --shadow: 0 14px 36px rgba(43, 38, 32, 0.08);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 88px;
+      }
+
+      body {
+        min-width: 320px;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: "Poppins", sans-serif;
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      .container {
+        width: min(100% - 48px, var(--container));
+        margin-inline: auto;
+      }
+
+      /* ================================================================
+         COMPONENTES REUTILIZÁVEIS
+         ================================================================ */
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 24px;
+        border: 1.5px solid transparent;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 160ms ease, background-color 160ms ease,
+          color 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .button--primary {
+        background: var(--coral);
+        color: var(--white);
+      }
+
+      .button--primary:hover {
+        background: #cf4d2e;
+      }
+
+      .button--outline {
+        border-color: var(--ink);
+        color: var(--ink);
+      }
+
+      .button--outline:hover {
+        background: var(--ink);
+        color: var(--white);
+      }
+
+      .button--white {
+        background: var(--white);
+        color: var(--plum);
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .section-heading {
+        max-width: 62ch;
+        margin-bottom: 36px;
+      }
+
+      .section-heading h2 {
+        font-size: clamp(26px, 3.6vw, 36px);
+      }
+
+      .section-heading p {
+        margin-top: 12px;
+        color: var(--muted);
+      }
+
+      /* ================================================================
+         CABEÇALHO E NAVEGAÇÃO
+         ================================================================ */
+      .site-header {
+        position: sticky;
+        z-index: 10;
+        top: 0;
+        background: rgba(251, 246, 239, 0.96);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+      }
+
+      .navigation {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 76px;
+        gap: 20px;
+      }
+
+      .logo {
+        font-family: "Fraunces", serif;
+        font-size: 21px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .logo span {
+        color: var(--coral);
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 23px;
+      }
+
+      .navigation-links {
+        position: absolute;
+        top: 76px;
+        right: 0;
+        left: 0;
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        padding: 14px 24px 18px;
+        background: var(--cream);
+        border-bottom: 1px solid var(--line);
+        list-style: none;
+      }
+
+      .navigation-links.is-open {
+        display: flex;
+      }
+
+      .navigation-links a {
+        display: block;
+        padding: 8px 0;
+        font-size: 15px;
+        text-decoration: none;
+      }
+
+      .navigation-links a:hover {
+        color: var(--coral);
+      }
+
+      .header-button {
+        display: none;
+      }
+
+      /* ================================================================
+         HERO DA CATEGORIA
+         ================================================================ */
+      .category-hero {
+        padding: 42px 0 72px;
+      }
+
+      .breadcrumb {
+        margin-bottom: 30px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .breadcrumb a {
+        color: var(--coral);
+        text-decoration: none;
+      }
+
+      .category-hero-layout {
+        display: grid;
+        align-items: center;
+        gap: 42px;
+      }
+
+      .category-hero h1 {
+        max-width: 12ch;
+        font-size: clamp(34px, 5vw, 54px);
+      }
+
+      .category-hero-description {
+        max-width: 52ch;
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .category-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 28px;
+      }
+
+      /* Ilustração decorativa que pode ser substituída por uma imagem real. */
+      .product-visual {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 390px;
+        overflow: hidden;
+        border-radius: var(--radius);
+        background: #f5dfd1;
+      }
+
+      .product-visual::before,
+      .product-visual::after {
+        position: absolute;
+        content: "";
+        border-radius: 50%;
+        opacity: 0.45;
+      }
+
+      .product-visual::before {
+        width: 230px;
+        height: 230px;
+        top: -80px;
+        right: -45px;
+        background: var(--yellow);
+      }
+
+      .product-visual::after {
+        width: 180px;
+        height: 180px;
+        bottom: -65px;
+        left: -45px;
+        background: var(--green);
+      }
+
+      .visual-balloons {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .visual-balloon {
+        border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+        box-shadow: inset -12px -12px 28px rgba(0, 0, 0, 0.1);
+      }
+
+      .visual-balloon--large {
+        width: 142px;
+        height: 172px;
+        background: var(--plum);
+      }
+
+      .visual-balloon--small {
+        width: 92px;
+        height: 114px;
+        margin-top: 42px;
+        background: var(--coral);
+      }
+
+      .visual-balloon--yellow {
+        width: 78px;
+        height: 98px;
+        margin-top: 72px;
+        background: var(--yellow);
+      }
+
+      .visual-caption {
+        position: absolute;
+        right: 20px;
+        bottom: 18px;
+        z-index: 2;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--plum);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      /* ================================================================
+         CARDS DE PRODUTOS E OPÇÕES
+         ================================================================ */
+      .options-section {
+        background: var(--white);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .product-grid {
+        display: grid;
+        gap: 20px;
+      }
+
+      .product-card {
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--cream);
+      }
+
+      .product-card h3 {
+        font-size: 21px;
+      }
+
+      .product-card p {
+        margin-top: 9px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .product-card ul {
+        display: grid;
+        gap: 7px;
+        margin: 18px 0 24px;
+        color: var(--muted);
+        font-size: 14px;
+        list-style: none;
+      }
+
+      .product-card li::before {
+        content: "✓";
+        margin-right: 8px;
+        color: var(--coral);
+        font-weight: 600;
+      }
+
+      .product-card .button {
+        width: 100%;
+        margin-top: auto;
+      }
+
+      .product-tag {
+        align-self: flex-start;
+        margin-bottom: 16px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: #f1d8a7;
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      /* ================================================================
+         BENEFÍCIOS, CUIDADOS E FAQ
+         ================================================================ */
+      .benefits-grid {
+        display: grid;
+        gap: 24px;
+      }
+
+      .benefit {
+        padding-left: 18px;
+        border-left: 3px solid var(--coral);
+      }
+
+      .benefit h3 {
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .benefit p {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .care-section {
+        background: var(--plum);
+        color: var(--white);
+      }
+
+      .care-section h2 {
+        color: var(--white);
+      }
+
+      .care-section .section-heading p {
+        color: #ead9e1;
+      }
+
+      .care-grid {
+        display: grid;
+        gap: 20px;
+      }
+
+      .care-card {
+        padding: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .care-card h3 {
+        color: #f3d9e4;
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+      }
+
+      .care-card p {
+        margin-top: 7px;
+        color: #ead9e1;
+        font-size: 14px;
+      }
+
+      .faq-list {
+        display: grid;
+        gap: 12px;
+        max-width: 820px;
+      }
+
+      .faq-item {
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--white);
+      }
+
+      .faq-item summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .faq-item p {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* ================================================================
+         CTA, RODAPÉ E BREAKPOINTS
+         ================================================================ */
+      .final-cta {
+        background: var(--coral);
+        color: var(--white);
+        text-align: center;
+      }
+
+      .final-cta h2 {
+        color: var(--white);
+      }
+
+      .final-cta p {
+        max-width: 55ch;
+        margin: 12px auto 0;
+      }
+
+      .final-cta .button {
+        margin-top: 24px;
+      }
+
+      .site-footer {
+        padding: 34px 0;
+        background: var(--ink);
+        color: #c9c2b4;
+        font-size: 14px;
+      }
+
+      .footer-layout {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px 24px;
+      }
+
+      @media (min-width: 700px) {
+        .product-grid,
+        .benefits-grid,
+        .care-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 820px) {
+        .menu-toggle {
+          display: none;
+        }
+
+        .navigation-links {
+          position: static;
+          display: flex;
+          flex-direction: row;
+          gap: 28px;
+          padding: 0;
+          background: transparent;
+          border: 0;
+        }
+
+        .header-button {
+          display: inline-flex;
+        }
+      }
+
+      @media (min-width: 880px) {
+        .category-hero-layout {
+          grid-template-columns: 1fr 0.82fr;
+        }
+      }
+
+      @media (max-width: 440px) {
+        .container {
+          width: min(100% - 32px, var(--container));
+        }
+
+        .category-actions,
+        .category-actions .button {
+          width: 100%;
+        }
+
+        .product-visual {
+          min-height: 310px;
+        }
+
+        .visual-balloon--large {
+          width: 110px;
+          height: 135px;
+        }
+
+        .visual-balloon--small {
+          width: 70px;
+          height: 90px;
+        }
+
+        .visual-balloon--yellow {
+          width: 58px;
+          height: 74px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Cabeçalho da loja com navegação para outras áreas do site. -->
+    <header class="site-header">
+      <div class="navigation container">
+        <a class="logo" href="index.html">
+            <span>Balões</span>
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-controls="navigation-links"
+          aria-expanded="false"
+          aria-label="Abrir menu"
+        >
+          <span aria-hidden="true">☰</span>
+        </button>
+
+        <nav aria-label="Navegação principal">
+          <ul class="navigation-links" id="navigation-links">
+            <li><a href="index.html#categorias">Categorias</a></li>
+            <li><a href="index.html#hoje">Entrega hoje</a></li>
+            <li><a href="index.html#entrega">Entrega</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+          </ul>
+        </nav>
+
+        <a class="button button--primary header-button" href="#orcamento">
+          Pedir orçamento
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero da categoria com título, descrição e representação visual do produto. -->
+      <section class="category-hero">
+        <div class="container">
+          <div class="breadcrumb">
+            <a href="index.html#categorias">Categorias</a>
+            <span aria-hidden="true"> / </span>
+            <span>Balões de Aniversário</span>
+          </div>
+
+          <div class="category-hero-layout">
+            <div>
+              <p class="product-tag">Categoria mais pedida</p>
+              <h1>Balões de aniversário para comemorar do seu jeito</h1>
+              <p class="category-hero-description">
+                Escolha entre buquês, arranjos para mesa e balões personalizados
+                para deixar o aniversário mais colorido, afetivo e inesquecível.
+              </p>
+
+              <div class="category-actions">
+                <a class="button button--primary" href="#orcamento">
+                  Montar meu orçamento
+                </a>
+                <a class="button button--outline" href="#opcoes">
+                  Ver opções
+                </a>
+              </div>
+            </div>
+
+            <!-- Ilustração CSS; você pode substituir por uma foto dos seus produtos. -->
+            <div
+              class="product-visual"
+              role="img"
+              aria-label="Ilustração de um arranjo com balões coloridos"
+            >
+              <div class="visual-balloons" aria-hidden="true">
+                <div class="visual-balloon visual-balloon--small"></div>
+                <div class="visual-balloon visual-balloon--large"></div>
+                <div class="visual-balloon visual-balloon--yellow"></div>
+              </div>
+              <span class="visual-caption">Personalize com nome e idade</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Opções de produtos disponíveis dentro da categoria. -->
+      <section class="section options-section" id="opcoes">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Escolha o estilo da sua comemoração</h2>
+            <p>
+              Todos os modelos podem ser adaptados de acordo com as cores,
+              idade, nome e tema da festa.
+            </p>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card">
+              <span class="product-tag">Para presentear</span>
+              <h3>Buquê de balões</h3>
+              <p>Uma composição pronta para surpreender no aniversário.</p>
+              <ul>
+                <li>De 5 a 15 balões</li>
+                <li>Nome, idade ou frase curta</li>
+                <li>Escolha das cores</li>
+              </ul>
+              <a class="button button--primary" href="#orcamento">Quero este modelo</a>
+            </article>
+
+            <article class="product-card">
+              <span class="product-tag">Mais completo</span>
+              <h3>Arranjo para mesa</h3>
+              <p>Ideal para compor a decoração principal da festa.</p>
+              <ul>
+                <li>Base decorativa inclusa</li>
+                <li>Composição de diferentes alturas</li>
+                <li>Personalização por tema</li>
+              </ul>
+              <a class="button button--primary" href="#orcamento">Quero este modelo</a>
+            </article>
+
+            <article class="product-card">
+              <span class="product-tag">Para fotos</span>
+              <h3>Balão personalizado</h3>
+              <p>Uma peça especial para registrar o momento.</p>
+              <ul>
+                <li>Balão metalizado ou bubble</li>
+                <li>Nome, idade e mensagem</li>
+                <li>Combinações sob consulta</li>
+              </ul>
+              <a class="button button--primary" href="#orcamento">Quero este modelo</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefícios da categoria para ajudar o visitante a decidir. -->
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Por que escolher um arranjo personalizado?</h2>
+            <p>Mais do que decoração, os balões ajudam a transformar a ocasião em uma lembrança.</p>
+          </div>
+
+          <div class="benefits-grid">
+            <article class="benefit">
+              <h3>Combina com a pessoa presenteada</h3>
+              <p>Escolha cores, mensagem, idade e detalhes que tenham significado.</p>
+            </article>
+            <article class="benefit">
+              <h3>Chega pronto para montar</h3>
+              <p>Receba o arranjo preparado para facilitar a decoração do ambiente.</p>
+            </article>
+            <article class="benefit">
+              <h3>Valoriza as fotos da festa</h3>
+              <p>Crie um ponto colorido para fotos, vídeos e momentos especiais.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Informações de conservação e cuidados com o produto. -->
+      <section class="section care-section">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Cuidados para os balões durarem mais</h2>
+            <p>Alguns cuidados simples ajudam a conservar o arranjo até o momento da comemoração.</p>
+          </div>
+
+          <div class="care-grid">
+            <article class="care-card">
+              <h3>Evite calor excessivo</h3>
+              <p>Mantenha o arranjo longe do sol direto, motores e ambientes muito quentes.</p>
+            </article>
+            <article class="care-card">
+              <h3>Cuidado com superfícies</h3>
+              <p>Evite contato com quinas, espinhos, paredes ásperas e objetos pontiagudos.</p>
+            </article>
+            <article class="care-card">
+              <h3>Transporte com atenção</h3>
+              <p>Ao receber, segure pela base e não puxe os balões individualmente.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ usando o elemento nativo details, sem necessidade de JavaScript. -->
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Dúvidas frequentes</h2>
+            <p>Confira algumas respostas antes de fazer seu pedido.</p>
+          </div>
+
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>Posso escolher as cores dos balões?</summary>
+              <p>Sim. Você pode informar suas cores preferidas e nossa equipe verifica a disponibilidade.</p>
+            </details>
+            <details class="faq-item">
+              <summary>É possível colocar nome e idade?</summary>
+              <p>Sim. Informe o nome, a idade ou a frase desejada no momento do orçamento.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Vocês entregam no mesmo dia?</summary>
+              <p>Alguns modelos têm produção rápida. Consulte a disponibilidade informando seu CEP e horário.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Como calculo o valor do frete?</summary>
+              <p>Envie seu CEP pelo orçamento. A equipe informa prazo e valor antes da confirmação do pedido.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA final direcionando o visitante para o formulário de orçamento. -->
+      <section class="section final-cta" id="orcamento">
+        <div class="container">
+          <h2>Vamos criar um arranjo especial para o seu aniversário?</h2>
+          <p>Envie os detalhes da comemoração e receba uma sugestão personalizada.</p>
+          <a class="button button--white" href="https://wa.me/5511999999999" target="_blank" rel="noopener">
+            Pedir orçamento pelo WhatsApp
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé com informações básicas da loja. -->
+    <footer class="site-footer">
+      <div class="footer-layout container">
+        <div>© 2026 Ateliê dos Balões</div>
+        <div>São Paulo e região</div>
+      </div>
+    </footer>
+
+    <script>
+      /* ================================================================
+         JAVASCRIPT DO MENU
+         O restante da página funciona sem JavaScript. Aqui usamos JS apenas
+         para abrir e fechar a navegação em telas pequenas.
+         ================================================================ */
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navigationLinks = document.querySelector(".navigation-links");
+
+      // Alterna o menu e mantém o estado acessível para leitores de tela.
+      menuToggle.addEventListener("click", () => {
+        const isOpen = navigationLinks.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+      });
+
+      // Fecha o menu depois que o usuário escolhe uma seção.
+      navigationLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navigationLinks.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Abrir menu");
+        });
+      });
+
+      // Permite fechar o menu pressionando Escape.
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          navigationLinks.classList.remove("is-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Abrir menu");
+        }
+      });
+    </script>
+  </body>
+</html>
